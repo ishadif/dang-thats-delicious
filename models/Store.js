@@ -40,9 +40,17 @@ storeSchema.pre('save', function(next){
 		next(); // skip it!
 		return; // stop the function from running
 	}
-	
+
 	this.slug = slug(this.name);
 	next();
 });
+
+storeSchema.statics.getTagsList = function() {
+	return this.aggregate([
+		{ $unwind: '$tags' },
+		{ $group: { _id: '$tags', count: { $sum: 1 } } },
+		{ $sort: { count: -1 } }
+	]);
+}
 
 module.exports = mongoose.model('Store', storeSchema);

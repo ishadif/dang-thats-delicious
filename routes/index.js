@@ -14,11 +14,13 @@ router.post('/add',
 );
 router.post('/add/:id',
 	storesController.upload,
-	catchErrors(storesController.resize), 
+	catchErrors(storesController.resize),
 	catchErrors(storesController.updateStore)
 );
 router.get('/stores/:id/edit', catchErrors(storesController.editStore));
+router.get('/store/:slug', catchErrors(storesController.getStoreBySlug));
 
-router.get('/store/:slug', catchErrors(storesController.getStoreBySlug))
+router.get('/tags', catchErrors(storesController.getStoreByTag));
+router.get('/tags/:tag', catchErrors(storesController.getStoreByTag));
 
 module.exports = router;
